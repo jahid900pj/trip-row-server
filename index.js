@@ -29,6 +29,12 @@ async function tripConnected() {
         const serviceCollection = client.db('Trip').collection('services')
         const reviewCollection = client.db('Trip').collection('reviews')
 
+        app.post('/addService', async (req, res) => {
+            const review = req.body;
+            const result = await serviceCollection.insertOne(review)
+            res.send(result)
+        })
+
         app.get('/homeServices', async (req, res) => {
             const cursor = serviceCollection.find({})
             const service = await cursor.limit(3).toArray()
